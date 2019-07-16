@@ -1,4 +1,4 @@
-package com.codeian.whmcsmanager.Model;
+package com.codeian.whmcsmanager.Model.Client;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

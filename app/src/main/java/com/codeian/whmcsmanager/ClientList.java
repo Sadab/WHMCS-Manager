@@ -17,14 +17,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class ClientList extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_client_list);
 
         //Bindings
         recyclerView = findViewById(R.id.clientListView);
@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Get Client List
         getClientList();
-
     }
 
     private void getClientList(){
@@ -42,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
         dataModelClient.enqueue(new Callback<DataModel>() {
             @Override
             public void onResponse(Call<DataModel> call, Response<DataModel> response) {
-                    DataModel body = response.body();
-                    Clients clientList = body.getClients();
-                    recyclerView.setAdapter(new ClientsAdapter(MainActivity.this, clientList.getClient()));
-                    clientList.getClient().size();
+                DataModel body = response.body();
+                Clients clientList = body.getClients();
+                recyclerView.setAdapter(new ClientsAdapter(ClientList.this, clientList.getClient()));
+                clientList.getClient().size();
             }
 
             @Override

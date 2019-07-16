@@ -1,7 +1,7 @@
 package com.codeian.whmcsmanager.Network;
 
 import com.codeian.whmcsmanager.BuildConfig;
-import com.codeian.whmcsmanager.Model.DataModel;
+import com.codeian.whmcsmanager.Model.Client.DataModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
