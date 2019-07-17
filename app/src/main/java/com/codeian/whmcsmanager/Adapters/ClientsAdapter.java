@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,11 +22,11 @@ import java.util.zip.Inflater;
 public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsViewHolder> {
 
     private Context context;
-    private List<Client> dataModelList;
+    private List<Client> clientModelList;
 
-    public ClientsAdapter(Context context, List<Client> dataModelList) {
+    public ClientsAdapter(Context context, List<Client> clientModelList) {
         this.context = context;
-        this.dataModelList = dataModelList;
+        this.clientModelList = clientModelList;
     }
 
     @NonNull
@@ -37,14 +39,14 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
 
     @Override
     public void onBindViewHolder(@NonNull ClientsViewHolder holder, int position) {
-        Client dataModel = dataModelList.get(position);
-        holder.fullName.setText(dataModel.getFirstname()+" "+dataModel.getLastname());
-        holder.email.setText(dataModel.getEmail());
+        Client clientModel = clientModelList.get(position);
+        holder.fullName.setText(clientModel.getFirstname()+" "+clientModel.getLastname());
+        holder.email.setText(clientModel.getEmail());
     }
 
     @Override
     public int getItemCount() {
-        return dataModelList.size();
+        return clientModelList.size();
     }
 
 
