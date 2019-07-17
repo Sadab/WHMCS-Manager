@@ -16,17 +16,20 @@ import com.codeian.whmcsmanager.Model.Client.Client;
 import com.codeian.whmcsmanager.Model.Client.DataModel;
 import com.codeian.whmcsmanager.R;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
 
-public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsViewHolder> {
+public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsViewHolder> implements Filterable{
 
     private Context context;
     private List<Client> clientModelList;
+    private List<Client> clientListFull;
 
     public ClientsAdapter(Context context, List<Client> clientModelList) {
         this.context = context;
         this.clientModelList = clientModelList;
+        this.clientListFull = new ArrayList<>(clientModelList);
     }
 
     @NonNull
@@ -49,6 +52,42 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
         return clientModelList.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return clientFilter;
+    }
+
+    private Filter clientFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            List<Client> filteredList = new ArrayList<>();
+
+            if(constraint == null || constraint.length() == 0){
+                filteredList.addAll(clientListFull);
+            }
+            else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for(Client item : clientListFull){
+                    if( (item.getFirstname().toLowerCase().contains(filterPattern)) || (item.getLastname().toLowerCase().contains(filterPattern)) || (item.getEmail().toLowerCase().contains(filterPattern)) ){
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            clientModelList.clear();
+            clientModelList.addAll((List)results.values);
+            notifyDataSetChanged();
+        }
+    };
+
 
     public class ClientsViewHolder extends RecyclerView.ViewHolder {
 
@@ -59,5 +98,12 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
             fullName = itemView.findViewById(R.id.clientNameTextView);
             email = itemView.findViewById(R.id.clientEmailTextView);
         }
+    }
+
+    private void searchList(List<Client> clientList) {
+
+        clientModelList = new ArrayList<>();
+        clientList.addAll(clientList);
+        notifyDataSetChanged();
     }
 }
