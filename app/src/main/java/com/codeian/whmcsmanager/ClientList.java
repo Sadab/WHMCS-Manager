@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.codeian.whmcsmanager.Adapters.ClientsAdapter;
 import com.codeian.whmcsmanager.Model.Client.Client;
@@ -16,6 +17,7 @@ import com.codeian.whmcsmanager.Model.Client.Clients;
 import com.codeian.whmcsmanager.Model.Client.DataModel;
 import com.codeian.whmcsmanager.Network.ApiHandler;
 import com.codeian.whmcsmanager.Network.GetService;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
 
@@ -27,17 +29,33 @@ public class ClientList extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ClientsAdapter adapter;
+    private ShimmerFrameLayout shimmerFrameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_list);
 
+        //Initialize things
+        shimmerFrameLayout = findViewById(R.id.shimmerIt);
+
         //Initialize the RecyclerView
         setRecyclerView();
 
         //Get Client List
         getClientList();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        shimmerFrameLayout.startShimmer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        shimmerFrameLayout.stopShimmer();
     }
 
     @Override
@@ -77,6 +95,9 @@ public class ClientList extends AppCompatActivity {
                 DataModel body = response.body();
                 Clients clientList = body.getClients();
                 adapter = new ClientsAdapter(ClientList.this, clientList.getClient());
+                shimmerFrameLayout.stopShimmer();
+                shimmerFrameLayout.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
                 recyclerView.setAdapter(adapter);
                 //recyclerView.setAdapter(new ClientsAdapter(ClientList.this, clientList.getClient()));
                 clientList.getClient().size();
