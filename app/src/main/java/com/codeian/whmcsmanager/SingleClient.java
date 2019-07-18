@@ -19,7 +19,6 @@ public class SingleClient extends AppCompatActivity {
     private CardView cardView;
     private ViewPagerAdapter viewPagerAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
