@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="shimmer_bg">#dddddd</color>
+    <color name="single_client_txt">#1c1c1c</color>
+    <color name="single_client">#ffffff</color>
 </resources>

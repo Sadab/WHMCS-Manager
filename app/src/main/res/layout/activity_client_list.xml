@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ClientList">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/clientListView"
         android:layout_weight="1"
