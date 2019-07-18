@@ -10,16 +10,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 
 import com.codeian.whmcsmanager.Adapters.ClientsAdapter;
-import com.codeian.whmcsmanager.Model.Client.Client;
 import com.codeian.whmcsmanager.Model.Client.Clients;
 import com.codeian.whmcsmanager.Model.Client.DataModel;
 import com.codeian.whmcsmanager.Network.ApiHandler;
 import com.codeian.whmcsmanager.Network.GetService;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,6 +62,8 @@ public class ClientList extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.actionbar_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.actionBarSearch);
         SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

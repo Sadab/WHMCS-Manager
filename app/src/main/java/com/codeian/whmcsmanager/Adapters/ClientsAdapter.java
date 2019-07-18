@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
@@ -13,12 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.codeian.whmcsmanager.Model.Client.Client;
-import com.codeian.whmcsmanager.Model.Client.DataModel;
 import com.codeian.whmcsmanager.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsViewHolder> implements Filterable{
 
@@ -100,10 +97,4 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
         }
     }
 
-    private void searchList(List<Client> clientList) {
-
-        clientModelList = new ArrayList<>();
-        clientList.addAll(clientList);
-        notifyDataSetChanged();
-    }
 }
