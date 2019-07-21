@@ -27,15 +27,21 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ClientList extends AppCompatActivity implements ClientsAdapter.OnClientClientClickListener {
 
+    public static final String NAME = "name";
+    public static final String CLIENT_ID = "id";
+    public static final String EMAIL = "email";
     private RecyclerView recyclerView;
     private ClientsAdapter adapter;
     private ShimmerFrameLayout shimmerFrameLayout;
+    private ArrayList<Client> clientArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +115,7 @@ public class ClientList extends AppCompatActivity implements ClientsAdapter.OnCl
                         shimmerFrameLayout.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                         recyclerView.setAdapter(adapter);
+                        clientArrayList = (ArrayList<Client>) clientList.getClient();
                         //recyclerView.setAdapter(new ClientsAdapter(ClientList.this, clientList.getClient()));
                         clientList.getClient().size();
                     }
@@ -130,6 +137,10 @@ public class ClientList extends AppCompatActivity implements ClientsAdapter.OnCl
         Log.d("Clicked @ ", String.valueOf(position));
         Toast.makeText(this, "Clicked @ "+ position, Toast.LENGTH_LONG).show();
         Intent singleClientIntent = new Intent(ClientList.this, SingleClient.class);
+        Client clientClicked = clientArrayList.get(position);
+        singleClientIntent.putExtra(NAME, clientClicked.getFirstname());
+        singleClientIntent.putExtra(CLIENT_ID, clientClicked.getId());
+        singleClientIntent.putExtra(EMAIL, clientClicked.getEmail());
         startActivity(singleClientIntent);
     }
 }

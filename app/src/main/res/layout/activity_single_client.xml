@@ -57,7 +57,7 @@
                 android:gravity="center"
                 android:paddingRight="10dp"
                 android:layout_gravity="center"
-                android:id="@+id/nameID"
+                android:id="@+id/nameIDSingleClient"
                 android:ellipsize="end"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/single_client"/>
@@ -70,7 +70,7 @@
                 android:paddingRight="10dp"
                 android:paddingLeft="10dp"
                 android:ellipsize="end"
-                android:id="@+id/emailID"
+                android:id="@+id/emailIDSingleClient"
                 android:text="Test@test.com"
                 android:textColor="@color/single_client"/>
         </LinearLayout>

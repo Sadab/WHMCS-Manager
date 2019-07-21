@@ -104,7 +104,14 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
 
         @Override
         public void onClick(View v) {
-            onClientClientClickListener.onClientClick(getAdapterPosition());
+            if(onClientClientClickListener != null) {
+                int position = getAdapterPosition();
+                if(position != RecyclerView.NO_POSITION){
+                    onClientClientClickListener.onClientClick(position);
+                }
+            }
+
+            //onClientClientClickListener.onClientClick(getAdapterPosition());
         }
     }
 
