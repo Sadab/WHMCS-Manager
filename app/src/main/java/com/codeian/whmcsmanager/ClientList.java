@@ -1,30 +1,37 @@
 package com.codeian.whmcsmanager;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Toast;
 
 import com.codeian.whmcsmanager.Adapters.ClientsAdapter;
+import com.codeian.whmcsmanager.Model.Client.Client;
 import com.codeian.whmcsmanager.Model.Client.Clients;
 import com.codeian.whmcsmanager.Model.Client.DataModel;
 import com.codeian.whmcsmanager.Network.ApiHandler;
 import com.codeian.whmcsmanager.Network.GetService;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ClientList extends AppCompatActivity {
+public class ClientList extends AppCompatActivity implements ClientsAdapter.OnClientClientClickListener {
 
     private RecyclerView recyclerView;
     private ClientsAdapter adapter;
@@ -94,14 +101,21 @@ public class ClientList extends AppCompatActivity {
             @Override
             public void onResponse(Call<DataModel> call, Response<DataModel> response) {
                 DataModel body = response.body();
-                Clients clientList = body.getClients();
-                adapter = new ClientsAdapter(ClientList.this, clientList.getClient());
-                shimmerFrameLayout.stopShimmer();
-                shimmerFrameLayout.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-                recyclerView.setAdapter(adapter);
-                //recyclerView.setAdapter(new ClientsAdapter(ClientList.this, clientList.getClient()));
-                clientList.getClient().size();
+                if(response.isSuccessful()){
+                    if(body != null){
+                        Clients clientList = body.getClients();
+                        adapter = new ClientsAdapter(ClientList.this, clientList.getClient(), ClientList.this);
+                        shimmerFrameLayout.stopShimmer();
+                        shimmerFrameLayout.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        recyclerView.setAdapter(adapter);
+                        //recyclerView.setAdapter(new ClientsAdapter(ClientList.this, clientList.getClient()));
+                        clientList.getClient().size();
+                    }
+                }
+                else {
+                    //@TODO have to write some edge case codes here
+                }
             }
 
             @Override
@@ -111,4 +125,11 @@ public class ClientList extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onClientClick(int position) {
+        Log.d("Clicked @ ", String.valueOf(position));
+        Toast.makeText(this, "Clicked @ "+ position, Toast.LENGTH_LONG).show();
+        Intent singleClientIntent = new Intent(ClientList.this, SingleClient.class);
+        startActivity(singleClientIntent);
+    }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,11 +23,13 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
     private Context context;
     private List<Client> clientModelList;
     private List<Client> clientListFull;
+    private OnClientClientClickListener mOnClientClientClickListener;
 
-    public ClientsAdapter(Context context, List<Client> clientModelList) {
+    public ClientsAdapter(Context context, List<Client> clientModelList, OnClientClientClickListener onClientClientClickListener) {
         this.context = context;
         this.clientModelList = clientModelList;
         this.clientListFull = new ArrayList<>(clientModelList);
+        this.mOnClientClientClickListener = onClientClientClickListener;
     }
 
     @NonNull
@@ -34,7 +37,7 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
     public ClientsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.client_item, parent, false);
-        return new ClientsViewHolder(view);
+        return new ClientsViewHolder(view, mOnClientClientClickListener);
     }
 
     @Override
@@ -86,15 +89,27 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ClientsV
     };
 
 
-    public class ClientsViewHolder extends RecyclerView.ViewHolder {
+    public class ClientsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView fullName, email;
+        private TextView fullName, email;
+        OnClientClientClickListener onClientClientClickListener;
 
-        public ClientsViewHolder(@NonNull View itemView) {
+        public ClientsViewHolder(@NonNull View itemView, OnClientClientClickListener onClientClientClickListener) {
             super(itemView);
             fullName = itemView.findViewById(R.id.clientNameTextView);
             email = itemView.findViewById(R.id.clientEmailTextView);
+            this.onClientClientClickListener = onClientClientClickListener;
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onClientClientClickListener.onClientClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnClientClientClickListener{
+        void onClientClick(int position);
     }
 
 }
