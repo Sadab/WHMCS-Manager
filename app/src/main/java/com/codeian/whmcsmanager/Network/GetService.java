@@ -15,5 +15,4 @@ public interface GetService {
 
     @GET(FINAL_URL)
     Call<DataModel> getClientsService();
-
 }
