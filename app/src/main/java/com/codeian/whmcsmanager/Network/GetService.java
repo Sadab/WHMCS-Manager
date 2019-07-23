@@ -14,6 +14,6 @@ public interface GetService {
     String FINAL_URL = "/includes/api.php?username="+username+"&"+"password="+password+"&responsetype=json&action=GetClients&accesskey="+accessKey;
 
     @GET(FINAL_URL)
-    Call<DataModel> getClients();
+    Call<DataModel> getClientsService();
 
 }

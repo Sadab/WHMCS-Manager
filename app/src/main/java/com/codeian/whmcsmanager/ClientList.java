@@ -100,9 +100,8 @@ public class ClientList extends AppCompatActivity implements ClientsAdapter.OnCl
     }
 
     private void getClientList(){
-
         GetService service = ApiHandler.getRetrofitInstance().create(GetService.class);
-        Call<DataModel> dataModelClient = service.getClients();
+        Call<DataModel> dataModelClient = service.getClientsService();
         dataModelClient.enqueue(new Callback<DataModel>() {
             @Override
             public void onResponse(Call<DataModel> call, Response<DataModel> response) {
