@@ -1,13 +1,11 @@
 package com.codeian.whmcsmanager;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +22,6 @@ import com.codeian.whmcsmanager.Model.Client.DataModel;
 import com.codeian.whmcsmanager.Network.ApiHandler;
 import com.codeian.whmcsmanager.Network.GetService;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 
 import java.util.ArrayList;

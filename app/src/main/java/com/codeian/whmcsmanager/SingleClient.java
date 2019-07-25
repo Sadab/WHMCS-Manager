@@ -13,10 +13,17 @@ import android.widget.Toast;
 import com.codeian.whmcsmanager.Fragments.Address;
 import com.codeian.whmcsmanager.Fragments.Domain;
 import com.codeian.whmcsmanager.Fragments.Products;
+import com.codeian.whmcsmanager.Model.Client.Products.ClientProductsRoot;
+import com.codeian.whmcsmanager.Network.ApiHandler;
+import com.codeian.whmcsmanager.Network.GetService;
 import com.codeian.whmcsmanager.ViewPager.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.jar.Attributes;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.os.Build.ID;
 import static com.codeian.whmcsmanager.ClientList.CLIENT_ID;
@@ -31,6 +38,9 @@ public class SingleClient extends AppCompatActivity {
     private ViewPagerAdapter viewPagerAdapter;
     private TextView nameID, emailID;
     private String name, id, email;
+    private String accessKey = BuildConfig.accessKey;
+    private String username = BuildConfig.username;
+    private String password = BuildConfig.password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +71,7 @@ public class SingleClient extends AppCompatActivity {
         id = intent.getStringExtra(CLIENT_ID);
         email = intent.getStringExtra(EMAIL);
         setUpDetails();
+        clientProductList();
         Toast.makeText(SingleClient.this, "Hi " + name, Toast.LENGTH_LONG).show();
         //Toast.makeText(SingleClient.this, "Id "+ ID, Toast.LENGTH_LONG).show();
         Log.d("client id", id);
@@ -69,5 +80,25 @@ public class SingleClient extends AppCompatActivity {
     private void setUpDetails(){
         nameID.setText(name);
         emailID.setText(email);
+    }
+
+    private void clientProductList(){
+        GetService service = ApiHandler.getRetrofitInstance().create(GetService.class);
+        Call<ClientProductsRoot> clientProductsRootCall = service.getClientProductsService("GetClientsProducts", username, password, accessKey, "json", id);
+        clientProductsRootCall.enqueue(new Callback<ClientProductsRoot>() {
+
+            @Override
+            public void onResponse(Call<ClientProductsRoot> call, Response<ClientProductsRoot> response) {
+                ClientProductsRoot body = response.body();
+                com.codeian.whmcsmanager.Model.Client.Products.Products productsList = body.getProducts();
+                productsList.getProduct().size();
+                Log.d("SizeOfProducts", String.valueOf(productsList.getProduct().size()));
+            }
+
+            @Override
+            public void onFailure(Call<ClientProductsRoot> call, Throwable t) {
+
+            }
+        });
     }
 }
