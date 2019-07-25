@@ -2,9 +2,11 @@ package com.codeian.whmcsmanager.Network;
 
 import com.codeian.whmcsmanager.BuildConfig;
 import com.codeian.whmcsmanager.Model.Client.DataModel;
+import com.codeian.whmcsmanager.Model.Client.Products.ClientProductsRoot;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface GetService {
 
@@ -15,4 +17,14 @@ public interface GetService {
 
     @GET(FINAL_URL)
     Call<DataModel> getClientsService();
+
+    @GET("/includes/api.php")
+    Call<ClientProductsRoot> getClientProductsService(
+            @Query("action") String actionName,
+            @Query("username") String apiUsername,
+            @Query("password") String apiPassword,
+            @Query("accesskey") String apiAccessKey,
+            @Query("responsetype") String apiResponseType,
+            @Query("clientid") String userId
+    );
 }
