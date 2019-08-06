@@ -36,7 +36,8 @@
         android:layout_gravity="center"
         app:cardElevation="0dp"
         android:id="@+id/cardViewSingleClient"
-        app:cardBackgroundColor="@color/colorPrimaryDark">
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardCornerRadius="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"

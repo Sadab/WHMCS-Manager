@@ -130,8 +130,6 @@ public class ClientList extends AppCompatActivity implements ClientsAdapter.OnCl
 
     @Override
     public void onClientClick(int position) {
-        Log.d("Clicked @ ", String.valueOf(position));
-        Toast.makeText(this, "Clicked @ "+ position, Toast.LENGTH_LONG).show();
         Intent singleClientIntent = new Intent(ClientList.this, SingleClient.class);
         Client clientClicked = clientArrayList.get(position);
         singleClientIntent.putExtra(NAME, clientClicked.getFirstname());

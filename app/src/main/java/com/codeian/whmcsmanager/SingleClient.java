@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +38,7 @@ public class SingleClient extends AppCompatActivity {
     private CardView cardView;
     private ViewPagerAdapter viewPagerAdapter;
     private TextView nameID, emailID;
-    private String name, id, email;
+    public String name, id, email;
     private String accessKey = BuildConfig.accessKey;
     private String username = BuildConfig.username;
     private String password = BuildConfig.password;
@@ -70,11 +71,13 @@ public class SingleClient extends AppCompatActivity {
         name = intent.getStringExtra(NAME);
         id = intent.getStringExtra(CLIENT_ID);
         email = intent.getStringExtra(EMAIL);
+
         setUpDetails();
         clientProductList();
-        Toast.makeText(SingleClient.this, "Hi " + name, Toast.LENGTH_LONG).show();
-        //Toast.makeText(SingleClient.this, "Id "+ ID, Toast.LENGTH_LONG).show();
-        Log.d("client id", id);
+    }
+
+    public String getMyData() {
+        return id;
     }
 
     private void setUpDetails(){
@@ -86,19 +89,16 @@ public class SingleClient extends AppCompatActivity {
         GetService service = ApiHandler.getRetrofitInstance().create(GetService.class);
         Call<ClientProductsRoot> clientProductsRootCall = service.getClientProductsService("GetClientsProducts", username, password, accessKey, "json", id);
         clientProductsRootCall.enqueue(new Callback<ClientProductsRoot>() {
-
             @Override
             public void onResponse(Call<ClientProductsRoot> call, Response<ClientProductsRoot> response) {
                 ClientProductsRoot body = response.body();
                 com.codeian.whmcsmanager.Model.Client.Products.Products productsList = body.getProducts();
-                productsList.getProduct().size();
-                Log.d("SizeOfProducts", String.valueOf(productsList.getProduct().size()));
             }
-
             @Override
             public void onFailure(Call<ClientProductsRoot> call, Throwable t) {
-
+                //@TODO Write EdgeCase
             }
         });
     }
+
 }
