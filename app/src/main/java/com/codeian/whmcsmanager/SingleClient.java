@@ -76,7 +76,7 @@ public class SingleClient extends AppCompatActivity {
         clientProductList();
     }
 
-    public String getMyData() {
+    public String getClientId() {
         return id;
     }
 

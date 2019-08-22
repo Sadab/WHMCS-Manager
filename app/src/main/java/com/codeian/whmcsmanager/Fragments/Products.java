@@ -49,7 +49,7 @@ public class Products extends Fragment {
 
         setRecyclerView();
         SingleClient singleClient = (SingleClient) getActivity();
-        String id = singleClient.getMyData();
+        String id = singleClient.getClientId();
         getProductList(id);
         return view;
     }
