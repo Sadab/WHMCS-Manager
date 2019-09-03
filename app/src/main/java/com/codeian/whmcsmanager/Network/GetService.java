@@ -30,7 +30,7 @@ public interface GetService {
     );
 
     @GET("/includes/api.php")
-    Call<ClientDomainRoot> getCleintDomainService (
+    Call<ClientDomainRoot> getClientDomainService (
             @Query("action") String actionName,
             @Query("username") String apiUsername,
             @Query("password") String apiPassword,

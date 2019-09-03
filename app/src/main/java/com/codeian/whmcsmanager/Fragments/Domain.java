@@ -74,7 +74,7 @@ public class Domain extends Fragment {
 
     private void getDomainList(String id){
         GetService service = ApiHandler.getRetrofitInstance().create(GetService.class);
-        Call<ClientDomainRoot> clientDomainRootCall = service.getCleintDomainService("GetClientsDomains", username, password, accessKey, "json", true, id);
+        Call<ClientDomainRoot> clientDomainRootCall = service.getClientDomainService("GetClientsDomains", username, password, accessKey, "json", true, id);
 
         clientDomainRootCall.enqueue(new Callback<ClientDomainRoot>() {
             @Override
