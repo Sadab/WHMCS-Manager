@@ -3,4 +3,5 @@
     <string name="search">Search</string>
     <string name="client_label">Clients</string>
     <string name="no_data_available">No data available</string>
+    <string name="delClient">Delete Client</string>
 </resources>

@@ -60,7 +60,7 @@ public class SingleClient extends AppCompatActivity {
         //Adding Frags
         viewPagerAdapter.addFrags(new Products(), "Products");
         viewPagerAdapter.addFrags(new Domain(), "Domain");
-        viewPagerAdapter.addFrags(new Address(), "Address");
+        viewPagerAdapter.addFrags(new Address(), "Actions");
 
         //setup Adapter
         viewPager.setAdapter(viewPagerAdapter);

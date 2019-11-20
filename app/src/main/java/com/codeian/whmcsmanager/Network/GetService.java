@@ -1,6 +1,7 @@
 package com.codeian.whmcsmanager.Network;
 
 import com.codeian.whmcsmanager.BuildConfig;
+import com.codeian.whmcsmanager.Model.Client.Actions.ClientDelRoot;
 import com.codeian.whmcsmanager.Model.Client.DataModel;
 import com.codeian.whmcsmanager.Model.Client.Domain.ClientDomainRoot;
 import com.codeian.whmcsmanager.Model.Client.Products.ClientProductsRoot;
@@ -38,5 +39,15 @@ public interface GetService {
             @Query("responsetype") String apiResponseType,
             @Query("stats") boolean stats,
             @Query("clientid") String userId
+    );
+
+    @GET("/includes/api.php")
+    Call<ClientDelRoot> getClientDeleteService (
+            @Query("action") String actionName,
+            @Query("username") String apiUsername,
+            @Query("password") String apiPassword,
+            @Query("clientid") String clientId,
+            @Query("accesskey") String apiAccesskey,
+            @Query("responsetype") String responseType
     );
 }
