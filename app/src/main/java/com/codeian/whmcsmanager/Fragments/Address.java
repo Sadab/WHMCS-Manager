@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.codeian.whmcsmanager.BuildConfig;
 import com.codeian.whmcsmanager.ClientList;
+import com.codeian.whmcsmanager.Model.Client.Actions.ClientCloseRoot;
 import com.codeian.whmcsmanager.Model.Client.Actions.ClientDelRoot;
 import com.codeian.whmcsmanager.Network.ApiHandler;
 import com.codeian.whmcsmanager.Network.GetService;
@@ -28,6 +29,7 @@ public class Address extends Fragment {
 
     View view;
     private Button delClient;
+    private Button closeClient;
     private String accessKey = BuildConfig.accessKey;
     private String username = BuildConfig.username;
     private String password = BuildConfig.password;
@@ -39,6 +41,7 @@ public class Address extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.single_client_address_frag, container, false);
         delClient = view.findViewById(R.id.btnDelClient);
+        closeClient = view.findViewById(R.id.btnCloseClient);
         SingleClient singleClient = (SingleClient) getActivity();
         final String clientId = singleClient.getClientId();
 
@@ -65,6 +68,36 @@ public class Address extends Fragment {
 
                     @Override
                     public void onFailure(Call<ClientDelRoot> call, Throwable t) {
+                        //@TODO
+                        //Have to write edge case here
+                    }
+                });
+            }
+        });
+
+        closeClient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GetService service = ApiHandler.getRetrofitInstance().create(GetService.class);
+                Call<ClientCloseRoot> clientCloseRootCall = service.getClientCloseService("CloseClient", username, password, clientId, accessKey, "json");
+
+                clientCloseRootCall.enqueue(new Callback<ClientCloseRoot>() {
+                    @Override
+                    public void onResponse(Call<ClientCloseRoot> call, Response<ClientCloseRoot> response) {
+                        if(response.isSuccessful()){
+                            ClientCloseRoot body = response.body();
+                            if (body.getResult().contains("success")){
+                                Toast.makeText(getContext(), "Client Closed Successfully", Toast.LENGTH_LONG).show();
+                                Intent startClientList = new Intent(getContext(), ClientList.class);
+                                startActivity(startClientList);
+                            } else {
+                                Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ClientCloseRoot> call, Throwable t) {
                         //@TODO
                         //Have to write edge case here
                     }

@@ -1,6 +1,7 @@
 package com.codeian.whmcsmanager.Network;
 
 import com.codeian.whmcsmanager.BuildConfig;
+import com.codeian.whmcsmanager.Model.Client.Actions.ClientCloseRoot;
 import com.codeian.whmcsmanager.Model.Client.Actions.ClientDelRoot;
 import com.codeian.whmcsmanager.Model.Client.DataModel;
 import com.codeian.whmcsmanager.Model.Client.Domain.ClientDomainRoot;
@@ -47,7 +48,17 @@ public interface GetService {
             @Query("username") String apiUsername,
             @Query("password") String apiPassword,
             @Query("clientid") String clientId,
-            @Query("accesskey") String apiAccesskey,
+            @Query("accesskey") String apiAccessKey,
+            @Query("responsetype") String responseType
+    );
+
+    @GET("/includes/api.php")
+    Call<ClientCloseRoot> getClientCloseService (
+            @Query("action") String actionName,
+            @Query("username") String apiUsername,
+            @Query("password") String apiPassword,
+            @Query("clientid") String clientId,
+            @Query("accesskey") String apiAccessKey,
             @Query("responsetype") String responseType
     );
 }
